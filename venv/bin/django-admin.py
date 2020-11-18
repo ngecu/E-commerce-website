@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #!/home/ngecu/Desktop/dennis/venv/bin/python3
 # When the django-admin.py deprecation ends, remove this script.
 import warnings
@@ -18,4 +19,10 @@ if __name__ == "__main__":
         'django-admin.py is deprecated in favor of django-admin.',
         RemovedInDjango40Warning,
     )
+=======
+#!/home/ngecu/Desktop/Projects/e-commerce/venv/bin/python
+from django.core import management
+
+if __name__ == "__main__":
+>>>>>>> 00b7560d221a17afc2f63807b5f895c7711d089f
     management.execute_from_command_line()

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #!/home/ngecu/Desktop/dennis/venv/bin/python3
+=======
+#!/home/ngecu/Desktop/Projects/e-commerce/venv/bin/python
+>>>>>>> 00b7560d221a17afc2f63807b5f895c7711d089f
 # -*- coding: utf-8 -*-
 import re
 import sys
