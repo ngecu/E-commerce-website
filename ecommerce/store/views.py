@@ -1,5 +1,4 @@
 from django.shortcuts import render
-<<<<<<< HEAD
 
 from django.http import JsonResponse
 
@@ -124,62 +123,3 @@ def processOrder(request):
      print("data: ",request.body)
      transaction_id = datetime.datetime.now().timestamp()
      data = json.loads(request.body)
-=======
-from .models import *
-
-def store(request):
-     products = Product.objects.all()
-     context = {"products":products}
-     return render(request, 'store/Store.html', context)
-
-def cart(request):
-     #check if authenticated
-     if request.user.is_authenticated:
-          customer = request.user.customer
-          order,created = Order.objects.get_or_create(customer=customer,complete=False)
-          items = order.orderitem_set.all() 
-     else:
-          items = []
-          order ={'get_cart_total':0,'get_cart_items':0}
-     
-     context = {"items":items,"order":order}
-     return render(request, 'store/Cart.html', context)
-
-def checkout(request):
->>>>>>> 00b7560d221a17afc2f63807b5f895c7711d089f
-
-     if request.user.is_authenticated:
-          customer = request.user.customer
-          order,created = Order.objects.get_or_create(customer=customer,complete=False)
-<<<<<<< HEAD
-          total = float(data['form']['total'])
-          order.transaction_id = transaction_id
-
-          if total == order.get_cart_total:
-               order.complete = True
-          order.save()
-
-          if order.shipping == True:
-               ShippingAddress.objects.create(
-                    customer = customer,
-                    order = order,
-                    address = data['shipping']['address'],
-                    city = data['shipping']['city'],
-                    state = data['shipping']['state'],
-                    zipcode = data['shipping']['zipcode']
-
-               )
-
-     else:
-          print("user is not logged in")
-     return JsonResponse('Payment submitted...',safe=False)
-=======
-          items = order.orderitem_set.all() 
-     else:
-          items = []
-          order ={'get_cart_total':0,'get_cart_items':0}
-
-     
-     context = {"items":items,"order":order}
-     return render(request, 'store/Checkout.html', context)
->>>>>>> 00b7560d221a17afc2f63807b5f895c7711d089f
