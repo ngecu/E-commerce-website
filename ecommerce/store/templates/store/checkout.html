@@ -135,7 +135,8 @@
             userFormData.email = form.email.value
         }
 
-        var url= "/process_order/"
+        var url= "/process_order/";
+
         fetch(url,{
         method :'POST',
         headers:{
@@ -143,13 +144,18 @@
             'X-CSRFToken':csrftoken,
         },
         body:JSON.stringify({'form':userFormData,'shipping':shippingInfo})
+        
     })
     .then((response)=> {
         return response.json()
     })
     .then((data) => {
-         console.log("success:",data)
+         console.log("success:",data);
          alert("Transaction Completed");
+
+         cart = {};
+         document.cookie = "cart="+ JSON.stringify(cart)+ ";domain=;path=/";
+
          window.location.href = "{% url 'store' %}"
     })
     }
