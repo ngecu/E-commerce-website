@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'store.apps.StoreConfig'
-
+    'store.apps.StoreConfig',
+    'taggit',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -142,3 +143,4 @@ STATICFILES_DIRS =[
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+print("media root:",MEDIA_ROOT)

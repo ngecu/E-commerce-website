@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 from django.db import models
 from django.contrib.auth.models import User
+from taggit.managers import TaggableManager
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE ,null=True,blank=True)
@@ -12,46 +13,63 @@ class Customer(models.Model):
     def __str__(self):
         return self.name
 
-class Product(models.Model):
-    name = models.CharField(max_length=200,null=True)
-    price = models.DecimalField(max_digits=7,decimal_places=2)
-    digital = models.BooleanField(default=False,null=True,blank=False)
-    image = models.ImageField(null=True)
-
+class Category(models.Model):
+    name = models.CharField(max_length=200,null=True,blank=True)
+    description = models.TextField(max_length=1000,null=True,blank=True)
+    icon = models.CharField(max_length=200,null=True,blank=True)
+    image = models.ImageField(null=True,upload_to='categories')
+    
     def __str__(self):
         return self.name
 
-    @property
-    def imageURL(self):
-        try:
-            url = self.image._unregister_lookup
-        except:
-            url = ''
 
-        return url
+# class Product(models.Model):
+#     name = models.CharField(max_length=200,null=True)
+#     category = models.ForeignKey(Category,blank=True,null=True,on_delete=models.SET_NULL)
+#     price = models.DecimalField(max_digits=7,decimal_places=2)
+#     digital = models.BooleanField(default=False,null=True,blank=False)
+#     image = models.ImageField(null=True)
 
-class Order(models.Model):
-    customer = models.ForeignKey(Customer,on_delete=models.SET_NULL,blank=True,null=True)
-    date_ordered = models.DateTimeField(auto_now_add=True)
-    complete = models.BooleanField(default=False,null=True,blank=False)
-    transaction_id = models.CharField(max_length=200,null=True)
+#     def __str__(self):
+#         return self.name
 
-    def __str__(self):
-        return str(self.id)
-    user = models.OneToOneField(User,null=True,on_delete=models.CASCADE)
+#     @property
+#     def imageURL(self):
+#         try:
+#             url = self.image._unregister_lookup
+#         except:
+#             url = ''
+
+#         return url
+
+# class Order(models.Model):
+#     customer = models.ForeignKey(Customer,on_delete=models.SET_NULL,blank=True,null=True)
+#     date_ordered = models.DateTimeField(auto_now_add=True)
+#     complete = models.BooleanField(default=False,null=True,blank=False)
+#     transaction_id = models.CharField(max_length=200,null=True)
+
+#     def __str__(self):
+#         return str(self.id)
+
+#     user = models.OneToOneField(User,null=True,on_delete=models.CASCADE)
+#     name = models.CharField(max_length=200,null=True)
+#     email = models.CharField(max_length=200,null=True)
+
+
+#     def __str__(self):
+#        return str(self.name)
+
+class SubCategory(models.Model):
+    category = models.ForeignKey(Category,null=True,on_delete=models.SET_NULL)
     name = models.CharField(max_length=200,null=True)
-    email = models.CharField(max_length=200,null=True)
-
-
-    def __str__(self):
-       return str(self.name)
-
 
 class Product(models.Model):
     name = models.CharField(max_length=200,null=True)
+    sub_category = models.ForeignKey(SubCategory,blank=True,null=True,on_delete=models.SET_NULL)
     price = models.FloatField()
     digital = models.BooleanField(default=False,null=True,blank=False)
-    image = models.ImageField(null=True,blank=True,upload_to='photos/%Y/%m/%d')
+    image = models.ImageField(null=True,blank=True,upload_to='products')
+    tags = TaggableManager()
 
     def __str__(self):
        return str(self.name)
@@ -97,9 +115,9 @@ class Order(models.Model):
 
 
 
-class OrderItem(models.Model):
-    product = models.ForeignKey(Product,on_delete=models.SET_NULL,null=True)
-    order = models.ForeignKey(Order,on_delete=models.SET_NULL,null=True)
+# class OrderItem(models.Model):
+#     product = models.ForeignKey(Product,on_delete=models.SET_NULL,null=True)
+#     order = models.ForeignKey(Order,on_delete=models.SET_NULL,null=True)
 
 class OrderItem(models.Model):
     product = models.ForeignKey(Product,null=True,on_delete=models.SET_NULL,blank=True)
@@ -124,3 +142,12 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return self.address
+
+
+class SavedItems(models.Model):
+    customer = models.ForeignKey(Customer,on_delete=models.SET_NULL,blank=True,null=True)
+    product = models.ForeignKey(Product,on_delete=models.SET_NULL,blank=True,null=True)
+
+    def __str__(self):
+        return str(self.customer) + str(self.product)
+

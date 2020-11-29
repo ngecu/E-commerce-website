@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 
 from django.http import JsonResponse
 
@@ -10,30 +10,64 @@ import datetime
 
 from .utils import cookieCart, cartData , guestOrder
 
-# Create your views here.
+from django.contrib.auth.forms import UserCreationForm
 
+from .forms import CreateUserForm
+
+from django.shortcuts import redirect
+
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from .filters import ProductFilter
+
+
+def search_store(request):
+    products = Product.objects.all()
+    myFilter = ProductFilter(request.GET,queryset=products)
+    products = myFilter.qs
+    user = request.user.id
+    customer = Customer.objects.get(id=user)
+    context = {"customer":customer,'products':products}
+    return render(request, 'store/search.html', context)
+    
+
+# Create your views here.
+@login_required(login_url='login')
 def store(request):
 
      data = cartData(request)
      cartItems = data['cartItems']
-
+     categories = Category.objects.all()
      products = Product.objects.all()
-     context = {'products':products,"cartItems":cartItems}
+     user = request.user.id
+     customer = Customer.objects.get(id=user)
+
+     myFilter = ProductFilter(request.GET,queryset=products)
+     products = myFilter.qs
+
+     print("products:",products)
+
+     # trip = get_object_or_404(Product)
+     # trip_related = trip.tags.similar_objects()
+
+     context = {'categories':categories,'products':products,"cartItems":cartItems,'customer':customer,'myFilter':myFilter}
      return render(request, 'store/store.html', context)
 
+@login_required(login_url='login')
 def cart(request):
 
      data = cartData(request)
      cartItems = data['cartItems']
      order = data['order']
      items = data['items']
+     user = request.user.id
+     customer = Customer.objects.get(id=user)
 
-
-     context = {'items':items,'order':order,"cartItems":cartItems}
+     context = {'items':items,'order':order,"cartItems":cartItems,'customer':customer}
      return render(request, 'store/cart.html', context)
 
 
-
+@login_required(login_url='login')
 def checkout(request):
 
      data = cartData(request)
@@ -109,3 +143,61 @@ def processOrder(request):
 
 
      return JsonResponse('Payment submitted...',safe=False)
+
+
+
+def registerPage(request):
+     if request.user.is_authenticated:
+          return redirect('store')
+     else:
+          form = CreateUserForm()
+          if request.method == 'POST':
+               form = CreateUserForm(request.POST)
+               if form.is_valid():
+                    form.save()
+                    user = form.cleaned_data.get('username')
+                    messages.success(request, 'Account was created for ' + user)
+
+                    return redirect('login')
+
+
+          context = {'form':form}
+          return render(request,'store/reg.html',context)
+
+def loginPage(request):
+     if request.user.is_authenticated:
+          return redirect('store')
+     else:
+          if request.method == 'POST':
+               username = request.POST.get('username')
+               password =request.POST.get('password')
+
+               user = authenticate(request, username=username, password=password)
+
+               if user is not None:
+                    login(request, user)
+                    return redirect('store')
+               else:
+                    messages.info(request, 'Username OR password is incorrect')
+
+     context = {}
+     return render(request,'store/login.html',context)
+
+
+def logoutUser(request):
+	logout(request)
+	return redirect('login_page')
+
+
+@login_required(login_url='login')
+def account(request,pk_test):
+     customer = Customer.objects.get(id=pk_test)
+     data = cartData(request)
+     cartItems = data['cartItems']
+     order = data['order']
+     items = data['items']
+          
+     context = {"customer":customer,'items':items,'order':order,"cartItems":cartItems}
+     
+     
+     return render(request,'store/account.html',context)
