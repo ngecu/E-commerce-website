@@ -3,51 +3,141 @@
 {% load static %}
 {% block content %}
    
-<div class="row">
-	<div class="col-lg-12">
+<div class="container">
 
-        <div class="box-element">
-            <a  class="btn btn-outline-dark" href="{% url 'store' %}">&#x2190; Continue Shopping</a>
-            <br>
-            <br>
-            <table class="table">
-                <tr>
-                    <th><h5>Items: <strong>{{order.get_cart_items}}</strong></h5></th>
-                    <th><h5>Total:<strong> ${{order.get_cart_total}}</strong></h5></th>
-                    <th>
-                        <a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Checkout</a>
-                    </th>
-                </tr>
-            </table>
-        </div>
-
-		<br>
-
-        <div class="box-element">
-            <div class="cart-row">
-                <div style="flex:2"></div>
-                <div style="flex:2"><strong>Item</strong></div>
-                <div style="flex:1"><strong>Price</strong></div>
-                <div style="flex:1"><strong>Quantity</strong></div>
-                <div style="flex:1"><strong>Total</strong></div>
-            </div>
+    <div class="row">
+        <main class="col-md-9">
+    <div class="card">
+    
+    <table class="table table-borderless table-shopping-cart">
+    <thead class="text-muted">
+    <tr class="small text-uppercase">
+      <th scope="col">Product</th>
+      <th scope="col" width="120">Quantity</th>
+      <th scope="col" width="120">Price</th>
+      <th scope="col" class="text-right" width="200"> </th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+    <tr>
+        <td>
+            <figure class="itemside">
+                <div class="aside"><img src="{{item.product.image}}" class="img-sm img-thumbnail"></div>
+                <figcaption class="info">
+                    <a href="#" class="title text-dark">{{item.product.name}}</a>
+                    <p class="text-muted small">Size: XL, Color: blue, <br> Brand: Gucci</p>
+                </figcaption>
+            </figure>
+        </td>
+        <td> 
+            <div style="flex:1">
+                <p class="quantity">{{item.quantity}}</p>
+                <div class="quantity">
+                    <img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}">
             
-            {% for item in items %}
-            <div class="cart-row">
-                <div style="flex:2"><img class="row-image" src="{{item.product.image.url}}"></div>
-                <div style="flex:2"><p>{{item.product.name}}</p></div>
-                <div style="flex:1"><p>${{item.product.price|floatformat:2}}</p></div>
-                <div style="flex:1">
-                    <p class="quantity">{{item.quantity}}</p>
-                    <div class="quantity">
-                        <img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}">
-                
-                        <img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart " src="{% static  'images/arrow-down.png' %}">
-                    </div>
+                    <img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart " src="{% static  'images/arrow-down.png' %}">
                 </div>
-                <div style="flex:1"><p>${{item.get_total}}</p></div>
             </div>
-            {% endfor %}
-	</div>
-</div>
+        </td>
+        <td> 
+            <div class="price-wrap"> 
+                <var class="price">${{item.get_total}}</var> 
+                <small class="text-muted"> ${{item.product.price|floatformat:2}} each </small> 
+            </div> <!-- price-wrap .// -->
+        </td>
+        <td class="text-right"> 
+        <a data-original-title="Save to Wishlist" title="" href="" class="btn btn-light" data-toggle="tooltip"> <i class="fa fa-heart"></i></a> 
+        <!-- <a href="" class="btn btn-light"> Remove</a> -->
+        </td>
+    </tr>
+    {% endfor %}
+
+    </tbody>
+    </table>
+
+
+      <nav aria-label="Page navigation example">    
+{% if items.has_other_pages %}
+<ul class="pagination justify-content-center">
+  {% if items.has_previous %}
+    <li><a class="page-link" href="?page={{ users.previous_page_number }}">Previous</a></li>
+  {% else %}
+  <li class="page-item disabled">
+    <a class="page-link" href="#" tabindex="-1">Previous</a>
+  </li>
+    <!-- <li class="disabled"><span>&laquo;</span></li> -->
+  {% endif %}
+  {% for i in items.paginator.page_range %}
+    {% if items.number == i %}
+      <li class="page-item active"><span class="page-link active">{{ i }} <span class="sr-only">(current)</span></span></li>
+    {% else %}
+      <li><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+    {% endif %}
+  {% endfor %}
+  {% if items.has_next %}
+    <li class="page-item" ><a class="page-link" href="?page={{ users.next_page_number }}">Next</a></li>
+  {% else %}
+  <li class="page-item disabled">
+    <a class="page-link" href="#" tabindex="-1">Next</a>
+  </li>
+    <!-- <li class="disabled"><span>&raquo;</span></li> -->
+  {% endif %}
+</ul>
+{% endif %}
+</nav>
+    
+    <div class="card-body border-top">
+        <a href="{% url 'checkout' %}" class="btn btn-primary float-md-right"> Make Purchase <i class="fa fa-chevron-right"></i> </a>
+        <a href="{% url 'store' %}" class="btn btn-light"> <i class="fa fa-chevron-left"></i> Continue shopping </a>
+    </div>	
+    </div> <!-- card.// -->
+    
+    <div class="alert alert-success mt-3">
+        <p class="icontext"><i class="icon text-success fa fa-truck"></i> Free Delivery within 1-2 weeks</p>
+    </div>
+    
+        </main> <!-- col.// -->
+        <aside class="col-md-3">
+            <div class="card mb-3">
+                <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label>Have coupon?</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="" placeholder="Coupon code">
+                            <span class="input-group-append"> 
+                                <button class="btn btn-primary">Apply</button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+                </div> <!-- card-body.// -->
+            </div>  <!-- card .// -->
+            <div class="card">
+                <div class="card-body">
+                        <dl class="dlist-align d-flex">
+                          <dt>Total price:</dt>
+                          <dd class="text-right">${{order.get_cart_total}}</dd>
+                        </dl>
+                        <dl class="dlist-align d-flex">
+                          <dt>Total Items:</dt>
+                          <dd class="text-right">{{order.get_cart_items}}</dd>
+                        </dl>
+                        <!-- <dl class="dlist-align">
+                          <dt>Total:</dt>
+                          <dd class="text-right  h5"><strong>$1,650</strong></dd>
+                        </dl> -->
+                        <hr>
+                        <p class="text-center mb-3">
+                            <img src="https://bootstrap-ecommerce.com/bootstrap-ecommerce-html/images/misc/payments.png" height="26">
+                        </p>
+                        
+                </div> <!-- card-body.// -->
+            </div>  <!-- card .// -->
+        </aside> <!-- col.// -->
+    </div>
+    
+    </div>
+
 {% endblock content %}

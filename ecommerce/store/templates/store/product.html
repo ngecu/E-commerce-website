@@ -1,0 +1,93 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+<div class="row bg-light">
+    <div class="col-md-6">
+        <img src="{{product.image}}" alt="">
+    </div>
+    <div class="col-md-6">
+
+        <h5>{{product.name}}</h5>
+        <p class="mb-2 text-muted text-uppercase small">Shirts</p>
+        <ul class="rating d-flex">
+          <li>
+            <i class="fas fa-star fa-sm text-primary"></i>
+          </li>
+          <li>
+            <i class="fas fa-star fa-sm text-primary"></i>
+          </li>
+          <li>
+            <i class="fas fa-star fa-sm text-primary"></i>
+          </li>
+          <li>
+            <i class="fas fa-star fa-sm text-primary"></i>
+          </li>
+          <li>
+            <i class="far fa-star fa-sm text-primary"></i>
+          </li>
+        </ul>
+        <p><span class="mr-1"><strong>$${{product.price}}</strong></span></p>
+        <p class="pt-1">${{product.description}}</p>
+        <div class="table-responsive">
+          <table class="table table-sm table-borderless mb-0">
+            <tbody>
+              <tr>
+                <th class="pl-0 w-25" scope="row"><strong>Model</strong></th>
+                <td>Shirt 5407X</td>
+              </tr>
+              <tr>
+                <th class="pl-0 w-25" scope="row"><strong>Color</strong></th>
+                <td>Blue</td>
+              </tr>
+              <tr>
+                <th class="pl-0 w-25" scope="row"><strong>Delivery</strong></th>
+                <td>USA, Europe</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+        <div class="table-responsive mb-2">
+          <table class="table table-sm table-borderless">
+            <tbody>
+              <tr>
+                <td class="pl-0 pb-0 w-25">Quantity</td>
+                <td class="pb-0">Select size</td>
+              </tr>
+              <tr>
+                <td class="pl-0">
+                  <div class="def-number-input number-input safari_only mb-0">
+                    <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
+                    <input class="quantity" min="0" name="quantity" value="1" type="number">
+                    <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+                  </div>
+                </td>
+                <td>
+                  <div class="mt-1">
+                    <div class="form-check form-check-inline pl-0">
+                      <input type="radio" class="form-check-input" id="small" name="materialExampleRadios" checked="">
+                      <label class="form-check-label small text-uppercase card-link-secondary" for="small">Small</label>
+                    </div>
+                    <div class="form-check form-check-inline pl-0">
+                      <input type="radio" class="form-check-input" id="medium" name="materialExampleRadios">
+                      <label class="form-check-label small text-uppercase card-link-secondary" for="medium">Medium</label>
+                    </div>
+                    <div class="form-check form-check-inline pl-0">
+                      <input type="radio" class="form-check-input" id="large" name="materialExampleRadios">
+                      <label class="form-check-label small text-uppercase card-link-secondary" for="large">Large</label>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button type="button" class="btn btn-primary btn-md mr-1 mb-2 waves-effect waves-light">Buy now</button>
+        <button type="button" class="btn btn-light btn-md mr-1 mb-2 waves-effect waves-light"><i class="fas fa-shopping-cart pr-2"></i>Add to
+          cart</button>
+      </div>
+</div>
+</div>
+
+{% endblock %}

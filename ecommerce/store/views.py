@@ -20,27 +20,38 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .filters import ProductFilter
 
+from django.contrib import messages
 
-def search_store(request):
-    products = Product.objects.all()
-    myFilter = ProductFilter(request.GET,queryset=products)
-    products = myFilter.qs
-    user = request.user.id
-    customer = Customer.objects.get(id=user)
-    context = {"customer":customer,'products':products}
-    return render(request, 'store/search.html', context)
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+# def search_store(request):
+#     products = Product.objects.all()
+#     myFilter = ProductFilter(request.GET,queryset=products)
+#     products = myFilter.qs
+#     try:
+#           user = request.user.id
+#           customer = Customer.objects.get(id=user)
+#           context = {"customer":customer}
+#     except:
+#           pass
+
+#     context = {'products':products}
+#     return render(request, 'store/search.html', context)
     
 
 # Create your views here.
-@login_required(login_url='login')
+@login_required(login_url='login_page')
 def store(request):
 
      data = cartData(request)
      cartItems = data['cartItems']
      categories = Category.objects.all()
      products = Product.objects.all()
-     user = request.user.id
-     customer = Customer.objects.get(id=user)
+     try:
+          user = request.user.id
+          customer = Customer.objects.get(id=user)
+     except :
+          pass
+
 
      myFilter = ProductFilter(request.GET,queryset=products)
      products = myFilter.qs
@@ -53,7 +64,7 @@ def store(request):
      context = {'categories':categories,'products':products,"cartItems":cartItems,'customer':customer,'myFilter':myFilter}
      return render(request, 'store/store.html', context)
 
-@login_required(login_url='login')
+@login_required(login_url='login_page')
 def cart(request):
 
      data = cartData(request)
@@ -62,25 +73,38 @@ def cart(request):
      items = data['items']
      user = request.user.id
      customer = Customer.objects.get(id=user)
+     page = request.GET.get('page', 1)
 
+     paginator = Paginator(items, 2)
+     try:
+        items = paginator.page(page)
+     except PageNotAnInteger:
+        items = paginator.page(1)
+     except EmptyPage:
+        items = paginator.page(paginator.num_pages)
      context = {'items':items,'order':order,"cartItems":cartItems,'customer':customer}
      return render(request, 'store/cart.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='login_page')
 def checkout(request):
-
+     try:
+          user = request.user.id
+          customer = Customer.objects.get(id=user)
+     except:
+          pass
      data = cartData(request)
      cartItems = data['cartItems']
      order = data['order']
      items = data['items']
           
-     context = {'items':items,'order':order,"cartItems":cartItems}
+     context = {"customer":customer,'items':items,'order':order,"cartItems":cartItems}
      return render(request, 'store/checkout.html', context)
 
 
 def updateItem(request):
      data = json.loads(request.body)
+     print(data)
      productId = data['productId']
      action = data['action']
 
@@ -189,7 +213,7 @@ def logoutUser(request):
 	return redirect('login_page')
 
 
-@login_required(login_url='login')
+@login_required(login_url='login_page')
 def account(request,pk_test):
      customer = Customer.objects.get(id=pk_test)
      data = cartData(request)
@@ -201,3 +225,38 @@ def account(request,pk_test):
      
      
      return render(request,'store/account.html',context)
+
+def category(request,pk_test):
+     category = Category.objects.get(name=pk_test)
+     sub_categories = category.subcategory_set.all()
+     print("sub_categories:",sub_categories)
+     data = cartData(request)
+     cartItems = data['cartItems']
+     order = data['order']
+     items = data['items']
+
+     try:
+          user = request.user.id
+          customer = Customer.objects.get(id=user)
+     except:
+          pass
+
+     context = {'sub_categories':sub_categories,'customer':customer,'items':items,'order':order,"cartItems":cartItems}
+     return render(request,'store/category.html',context)
+
+
+def product(request,pk_test):
+     product = Product.objects.get(name=pk_test)
+     data = cartData(request)
+     cartItems = data['cartItems']
+     order = data['order']
+     items = data['items']
+     try:
+          user = request.user.id
+          customer = Customer.objects.get(id=user)
+     except:
+          pass
+
+     context = {'product':product,'customer':customer,'items':items,'order':order,"cartItems":cartItems}
+     return render(request,'store/product.html',context)
+     

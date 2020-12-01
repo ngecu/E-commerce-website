@@ -3,7 +3,7 @@
 {% load static %}
 <html>
 <head>
-	<title>Ecom</title>
+	<title>Online Store(Dev Ngecu)</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
 
@@ -57,7 +57,7 @@ if (cart == null) {
 console.log("cart:",cart)
   </script>
 </head>
-<body onload="how()">
+<body>
 
 
   <div class="bg-dark text-center">
@@ -65,7 +65,7 @@ console.log("cart:",cart)
   </div>
 
  <div class="container">
-<nav class="navbar  navbar-expand-lg navbar-light bg-light text-dark">
+<nav class="navbar  navbar-expand-lg navbar-light bg-light text-dark" id="myHeader">
     <a class="navbar-brand" href="{% url 'store' %}">
       <img src="{% static  'images/logo.png' %}" alt="" style="width: 100px;">
     </a>
@@ -98,6 +98,8 @@ console.log("cart:",cart)
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item" href="{% url 'account' customer.id %}"> Account</a>
+          <a class="dropdown-item" href="{% url 'account' customer.id %}"> Saved Items</a>
+
           <hr>
           <a class="dropdown-item btn btn-primary" href="{% url 'logout' %}">Logout</a>
         </div>       
@@ -127,7 +129,7 @@ console.log("cart:",cart)
 </div>
 
 <!-- Footer -->
-<footer class="page-footer font-small stylish-color-dark pt-4">
+<footer class="page-footer font-small m-2 stylish-color-dark pt-4">
 
   <!-- Footer Links -->
   <div class="container text-center text-md-left">
@@ -293,22 +295,20 @@ console.log("cart:",cart)
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-<script>
-  function how() {
-    fetch("https://axesso-walmart-data-service.p.rapidapi.com/wlm/walmart-lookup-product?url=%3CREQUIRED%3E", {
-	"method": "GET",
-	"headers": {
-		"x-rapidapi-key": "0935c1fe3amsh96b528ccd49d0abp115bc8jsnf1559720dc97",
-		"x-rapidapi-host": "axesso-walmart-data-service.p.rapidapi.com"
-	}
-})
-.then(response => {
-	console.log(response);
-})
-.catch(err => {
-	console.error(err);
-});
-  }
-</script>
+  <script>
+    window.onscroll = function() {myFunction()};
+    
+    var header = document.getElementById("myHeader");
+    var sticky = header.offsetTop;
+    console.log(header)
+    
+    function myFunction() {
+      if (window.pageYOffset > sticky) {
+        header.classList.add("sticky");
+      } else {
+        header.classList.remove("sticky");
+      }
+    }
+    </script>
 </body>
 </html>
