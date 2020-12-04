@@ -24,17 +24,18 @@ from django.contrib import messages
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # def search_store(request):
+#     data = cartData(request)
+#     cartItems = data['cartItems']
 #     products = Product.objects.all()
 #     myFilter = ProductFilter(request.GET,queryset=products)
 #     products = myFilter.qs
 #     try:
-#           user = request.user.id
-#           customer = Customer.objects.get(id=user)
+#           user = request.user
 #           context = {"customer":customer}
 #     except:
 #           pass
 
-#     context = {'products':products}
+#     context = {'products':products,"customer":user}
 #     return render(request, 'store/search.html', context)
     
 
@@ -47,8 +48,8 @@ def store(request):
      categories = Category.objects.all()
      products = Product.objects.all()
      try:
-          user = request.user.id
-          customer = Customer.objects.get(id=user)
+          user = request.user
+          
      except :
           pass
 
@@ -61,7 +62,7 @@ def store(request):
      # trip = get_object_or_404(Product)
      # trip_related = trip.tags.similar_objects()
 
-     context = {'categories':categories,'products':products,"cartItems":cartItems,'customer':customer,'myFilter':myFilter}
+     context = {'categories':categories,'products':products,"cartItems":cartItems,'customer':user,'myFilter':myFilter}
      return render(request, 'store/store.html', context)
 
 @login_required(login_url='login_page')
@@ -136,24 +137,11 @@ def processOrder(request):
      print("data: ",request.body)
      transaction_id = datetime.datetime.now().timestamp()
      data = json.loads(request.body)
+     total = float(data['form']['total'])
 
      if request.user.is_authenticated:
           customer = request.user.customer
-          order,created = Order.objects.get_or_create(customer=customer,complete=False)
-
-
-     else:
-
-          customer,order = guestOrder(request,data)
-          
-          total = float(data['form']['total'])
-          order.transaction_id = transaction_id
-
-          if total == order.get_cart_total:
-               order.complete = True
-          order.save()
-
-
+          order,created = Order.objects.get_or_create(customer=customer,complete=True,transaction_id = transaction_id)
           if order.shipping == True:
                ShippingAddress.objects.create(
                     customer = customer,
@@ -164,9 +152,10 @@ def processOrder(request):
                     zipcode = data['shipping']['zipcode']
 
                )
+               print("shipping true")
 
 
-     return JsonResponse('Payment submitted...',safe=False)
+          return JsonResponse('Payment submitted...',safe=False)
 
 
 
@@ -180,9 +169,11 @@ def registerPage(request):
                if form.is_valid():
                     form.save()
                     user = form.cleaned_data.get('username')
+                    email = form.cleaned_data.get('username')
+                    Customer.objects.create(user=user,name=user,email=email)
                     messages.success(request, 'Account was created for ' + user)
 
-                    return redirect('login')
+                    return redirect('login_page')
 
 
           context = {'form':form}

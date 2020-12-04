@@ -29,6 +29,7 @@
 						<a href="{% url 'category' category.name %}">
 							<i class="{{category.icon}}"></i>
 							{{category.name}}
+							
 						</a>
 					</li>
 					{% endfor %}
@@ -167,7 +168,7 @@
 		
 		</div>
 
-		<div class="row"></div>
+		
 	
 			<div class="row bg-light m-2 rounded">
 				<h2>Recommended For You</h2>
@@ -175,15 +176,10 @@
 				
 				{% for product in products %}
 				<div class="col-12 col-sm-8 col-md-6 col-lg-4">
-					<a href="{% url 'product' product.name %}">
+					<!-- <a href="{% url 'product' product.name %}"> -->
 				  <div class="card">
-					<img class="card-img img-thumbnail" src="{{product.image}}" alt="Vans">
-					<!-- <div class="card-img-overlay d-flex justify-content-end">
+					<img class="card-img img-thumbnail" src="https://source.unsplash.com/random/800x600" alt="Vans">
 				
-					  <a href="#" class="card-link like">
-						<i class="fas fa-heart"></i>
-					  </a>
-					</div> -->
 					<div class="card-body">
 					  <h4 class="card-title">{{product.name}}</h4>
 						 
@@ -195,7 +191,7 @@
 					  </div>
 					</div>
 				  </div>
-				</a>
+				<!-- </a> -->
 				</div>
 				{% endfor %}
 
@@ -207,11 +203,7 @@
 			  <div class="row">
 				  <img src="{% static  'images/bf20.gif' %}" alt="">
 			  </div>
-			  <div class="row">
-				{% for trip in trip_related %}
-				<h1>{{ trip.trip_title }}</h1>
-			{% endfor %}
-			  </div>
+		
 	</div>
 </div>
 
