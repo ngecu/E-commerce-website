@@ -4,10 +4,8 @@ from . import views
 from django.urls import re_path
 urlpatterns = [
         #Leave as empty string for base url
-	url(r'^$', views.store, name="store"),
-	# url(r'/$', views.search_store, name='search_store'),
-	# path('<str:pk_test>/',views.search_store,name="search_store"),
-	# re_path(r'^bio/(?P<username>\w+)/$', views.bio, name='bio'),
+	path('',views.store,name="store"),
+	# path('/$',views.search_store,name="search_store"),
 	path('cart/', views.cart, name="cart"),
 	path('checkout/', views.checkout, name="checkout"),
 	path('update_item/', views.updateItem, name="update_item"),

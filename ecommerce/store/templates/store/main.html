@@ -8,9 +8,19 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/store.css' %}">
 
-	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/category.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/cart.css' %}">
   <script src="https://kit.fontawesome.com/0cc3d8b950.js" crossorigin="anonymous"></script>
+
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
   <script>
     var user = '{{request.user}}';
 
@@ -64,7 +74,209 @@ console.log("cart:",cart)
     <img src="{% static  'images/4.gif' %}">
   </div>
 
- <div class="container">
+  <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Centered nav only <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown08" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+        <div class="dropdown-menu" aria-labelledby="dropdown08">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+ 
+
+  <!-- <nav class="navbar navbar-expand-md  navbar-light">
+      <div class="container">
+
+        <button class="navbar-toggler" type="button" onclick="openNav()" data-toggle="collapse" >
+          MENU
+          <span class="navbar-toggler-icon"></span>
+      </button>
+    <a href="/" class="navbar-brand"> <img src="{% static  'images/logo.png' %}" width="50" alt=""> </a>
+   
+    <div class="navbar-collapse collapse justify-content-stretch" id="navbar5">
+        <form class="ml-3 my-auto d-inline w-100">
+            <div class="search-containers">
+                <form action="">
+                  <input type="text" placeholder="Search.." name="search">
+                  <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
+              </div>
+        </form>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item" style="border-right:1px solid #eee;">
+                <a data-toggle="tooltip" title="My Account" class="nav-link justify-content-center" href="#" > <i class="fas fa-user-circle"></i></a>
+              </li>
+              <li class="nav-item" style="border-right: 1px solid #eee;">
+                <a data-toggle="tooltip" title="Customer Help" class="nav-link" href="#" > <i class="far fa-question-circle"></i> </a>
+                
+              </li>
+              <li class="nav-item">
+                <a data-toggle="tooltip" title="Checkout" class="nav-link" href="{% url 'cart' %}"> <i class="fas fa-shopping-cart"></i> 
+                  <p id="cart-total">{{cartItems}}</p>
+
+                </a>
+              </li>
+
+              
+            
+            </ul>
+          </div>
+    </div>
+</div>
+</nav> -->
+<div class="container">
+<nav class="navbar  navbar-expand-lg navbar-light bg-light text-dark" id="myHeader">
+  <a class="navbar-brand" href="{% url 'store' %}">
+    <img src="{% static  'images/logo.png' %}" alt="" style="width: 100px;">
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+
+
+
+
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'store' %}">Store <span class="sr-only">(current)</span></a>
+      </li>
+ 
+    </ul>
+    <form class="form-inline my-2 my-lg-0" action="get">
+      {{myFilter.form}}
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+    <div class="dropdown">
+      {% if request.user.is_authenticated %}
+      <button class="btn dropdown-toggle text-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Hi,{{request.user}}
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="{% url 'account' customer.id %}"> Account</a>
+
+        <hr>
+        <a class="dropdown-item btn btn-primary" href="{% url 'logout' %}">Logout</a>
+      </div>       
+       {% else %}
+      <a href="{% url 'login_page' %}"class="btn btn-warning">Login</a>
+  {% endif %}  
+
+      
+    </div>
+
+    <div class="form-inline my-2 my-lg-0">
+      
+         <a href="{% url 'cart' %}">
+            <img  id="cart-icon" src="{% static 'images/cart.png' %}">
+        </a>
+        <p id="cart-total">{{cartItems}}</p>
+
+    </div>
+  </div>
+</nav>
+</div>
+
+<nav class="navbar navbar-expand-sm second-navbar navbar-light bg-danger text-light" id="navbar" data-toggle="affix">
+    <div class="mx-auto d-sm-flex d-block flex-sm-nowrap">
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample11" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
+
+          
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item image-nav" id="image-nav">
+                <a href="#">
+                  <img src="{% static  'images/logo.png' %}" width="50px" alt="">
+                </a>
+               
+              </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Living Room
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </li>
+
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Bathrooms
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </li>
+
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Bedroom
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </li>
+
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Kitchen
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </li>
+
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Ndoto Kids
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+ <!-- <div class="container">
 <nav class="navbar  navbar-expand-lg navbar-light bg-light text-dark" id="myHeader">
     <a class="navbar-brand" href="{% url 'store' %}">
       <img src="{% static  'images/logo.png' %}" alt="" style="width: 100px;">
@@ -87,7 +299,7 @@ console.log("cart:",cart)
       </ul>
       <form class="form-inline my-2 my-lg-0" action="get">
         {{myFilter.form}}
-        <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
+         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> 
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
 
@@ -119,171 +331,264 @@ console.log("cart:",cart)
       </div>
     </div>
   </nav>
-</div>   
+</div>    -->
 <div class="main">
   {% block content %}
 
 
   {% endblock content %}
 </div>
+<hr/>
 
-<!-- Footer -->
-<footer class="page-footer font-small m-2 stylish-color-dark pt-4">
-
-  <!-- Footer Links -->
-  <div class="container text-center text-md-left">
-
-    <!-- Grid row -->
+<footer class="text-center text-lg-start">
+  <!-- Grid container -->
+  <div class="container p-4">
+    <!--Grid row-->
     <div class="row">
+      <!--Grid column-->
+      <div class="col-lg-12 col-md-12 mb-4 mb-md-0">
+        <h2 class="text-warning">
+          Brands we stock
+          
+          </h2>
 
-      <!-- Grid column -->
-      <div class="col-md-4 mx-auto">
-
-        <!-- Content -->
-        <h5 class="font-weight-bold text-uppercase mt-3 mb-4">Black Friday</h5>
-        <p>Black Friday is an informal name for the Friday following Thanksgiving Day in the United States, which is celebrated on the fourth Thursday of November. 
-</p>
-
+        <p>
+          We pick the very best so you can be assured of the quality. There can be no compromises <br/> when it comes to materials, ease of wear, and durability.
+        </p>
       </div>
-      <!-- Grid column -->
 
-      <hr class="clearfix w-100 d-md-none">
+      <div class="col-lg-12 col-md-12 mb-4 mb-md-0">
+        <div class="row">
+          <div class="col-lg-3 col-sm-12 col-3 ">
+            <a href="">
+            <img src="https://ndotohome.com/wp-content/uploads/2020/10/LG.jpg" alt="">
+           </a>
+          </div>
+          <div class="col-lg-3 col-sm-12 col-3">
+            <a href="">
+            <img src="https://ndotohome.com/wp-content/uploads/2020/10/hotpoint.jpg" alt="">
+           </a>
+          </div>
 
-      <!-- Grid column -->
-      <div class="col-md-2 mx-auto">
+          <div class="col-lg-3 col-sm-12 col-3">
+            <a href="">
+            <img src="https://ndotohome.com/wp-content/uploads/2020/10/redberry.jpg" alt="">
+           </a>
+          </div>
 
-        <!-- Links -->
-        <h5 class="font-weight-bold text-uppercase mt-3 mb-4">ABOUT</h5>
+          <div class="col-lg-3 col-sm-12 col-3">
+            <a href="">
+            <img src="https://ndotohome.com/wp-content/uploads/2020/10/nunix.jpg" alt="">
+           </a>
+          </div>
 
-        <ul class="list-unstyled">
-          <li>
-            <a href="#!">About Us</a>
-          </li>
-          <li>
-            <a href="#!">Privacy Policy</a>
-          </li>
-          <li>
-            <a href="#!">Terms And Conditions</a>
-          </li>
-          <li>
-            <a href="#!">Black Friday 2020</a>
-          </li>
-        </ul>
-
+        </div>
+      
+      
       </div>
-      <!-- Grid column -->
-
-      <hr class="clearfix w-100 d-md-none">
-
-      <!-- Grid column -->
-      <div class="col-md-2 mx-auto">
-
-        <!-- Links -->
-        <h5 class="font-weight-bold text-uppercase mt-3 mb-4">INTERNATIONAL</h5>
-
-        <ul class="list-unstyled">
-          <li>
-            <a href="#!">Kenya</a>
-          </li>
-          <li>
-            <a href="#!">USA</a>
-          </li>
-          <li>
-            <a href="#!">South Africa</a>
-          </li>
-          <li>
-            <a href="#!">Egypt</a>
-          </li>
-        </ul>
-
+     
+    </div>
+    <hr/>
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="row">
+        <div class="col-lg-2 col-2">
+          <i class="far fa-compass"></i>
+        </div>
+        <div class="col-lg-10 col-10 foo">
+          
+          <b>Countrywide Delivery</b>
+          <br/>
+          <p>
+          We deliver in all parts of the country 
+          </p>
+        </div>
       </div>
-      <!-- Grid column -->
-
-      <hr class="clearfix w-100 d-md-none">
-
-      <!-- Grid column -->
-      <div class="col-md-2 mx-auto">
-
-        <!-- Links -->
-        <h5 class="font-weight-bold text-uppercase mt-3 mb-4">Make Money</h5>
-
-        <ul class="list-unstyled">
-          <li>
-            <a href="#!">Sell on our platform</a>
-          </li>
-          <li>
-            <a href="#!">Become an Affiliated Patner</a>
-          </li>
-          <li>
-            <a href="#!">Become a Sales Consultant</a>
-          </li>
-          <li>
-            <a href="#!">Become a Logistics Service Partner</a>
-          </li>
-        </ul>
-
       </div>
-      <!-- Grid column -->
+
+      <div class="col-lg-3">
+        <div class="row">
+        <div class="col-lg-2 col-2">
+          <i class="fas fa-directions"></i>
+                  </div>
+        <div class="col-lg-10 col-10 foo">
+          <b>Best Price</b>
+          <br/>
+          <p>
+          We offer the affodable prices in all our products 
+        </p>
+        </div>
+      </div>
+      </div>
+
+      <div class="col-lg-3">
+        <div class="row">
+        <div class="col-lg-2 col-2">
+          <i class="fas fa-globe-africa"></i>
+        </div>
+        <div class="col-lg-10 col-10 foo">
+
+          <b>Top Quality</b>
+          <br/>
+          <p>
+          We have hand picked the best quality products, just for you. 
+          </p>
+        </div>
+      </div>
+      </div>
+
+      <div class="col-lg-3">
+        <div class="row">
+        <div class="col-lg-2 col-2">
+          <i class="far fa-compass"></i>
+        </div>
+        <div class="col-lg-10 col-10 foo">
+          <b>100% Secure Checkout</b>
+          <br/>
+          <p>
+          Mpesa/ PayPal / MasterCard / Visa 
+        </p>
+        </div>
+      </div>
+      </div>
+      
 
     </div>
-    <!-- Grid row -->
-
+    <!--Grid row-->
   </div>
-  <!-- Footer Links -->
-
-  <hr>
-
-  <!-- Call to action -->
-  <ul class="list-unstyled list-inline text-center py-2">
-    <li class="list-inline-item">
-      <h5 class="mb-1">Register for free</h5>
-    </li>
-    <li class="list-inline-item">
-      <a href="#!" class="btn btn-danger btn-rounded">Sign up!</a>
-    </li>
-  </ul>
-  <!-- Call to action -->
-
-  <hr>
-
-  <!-- Social buttons -->
-  <ul class="list-unstyled list-inline text-center">
-    <li class="list-inline-item">
-      <a class="btn-floating btn-fb mx-1">
-        <i class="fab fa-facebook-f"> </i>
-      </a>
-    </li>
-    <li class="list-inline-item">
-      <a class="btn-floating btn-tw mx-1">
-        <i class="fab fa-twitter"> </i>
-      </a>
-    </li>
-    <li class="list-inline-item">
-      <a class="btn-floating btn-gplus mx-1">
-        <i class="fab fa-google-plus-g"> </i>
-      </a>
-    </li>
-    <li class="list-inline-item">
-      <a class="btn-floating btn-li mx-1">
-        <i class="fab fa-linkedin-in"> </i>
-      </a>
-    </li>
-    <li class="list-inline-item">
-      <a class="btn-floating btn-dribbble mx-1">
-        <i class="fab fa-dribbble"> </i>
-      </a>
-    </li>
-  </ul>
-  <!-- Social buttons -->
+  <!-- Grid container -->
 
   <!-- Copyright -->
-  <div class="footer-copyright text-center py-3">© 2020 Copyright:
-    <a href="https://devngecu.herokuapp.com"> devngecu.com</a>
-  </div>
-  <!-- Copyright -->
 
+  <!-- Copyright -->
 </footer>
 <!-- Footer -->
+
+
+<footer class="bg-dark text-center text-lg-start text-light ">
+  <!-- Grid container -->
+  <div class="container p-4 text-left">
+    <!--Grid row-->
+    <div class="row ">
+      <!--Grid column-->
+      <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+        <h5 class="text-uppercase">ABOUT</h5>
+
+        <ul class="list-unstyled mb-0">
+          <li>
+            <a href="#!" class="text-light">Company</a>
+          </li>
+          <li>
+            <a href="#!" class="text-light">Orders</a>
+          </li>
+          <li>
+            <a href="#!" class="text-light">Quality</a>
+          </li>
+          <li>
+            <a href="#!" class="text-light">Privacy Policy</a>
+          </li>
+          <li>
+            <a href="#!" class="text-light">Gift Cards</a>
+          </li>
+        </ul>
+      </div>
+      <!--Grid column-->
+
+      <!--Grid column-->
+      <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+        <h5 class="text-uppercase mb-0">Links</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <a href="#!" class="text-light"> 
+               My Account</a>
+          </li>
+          <li>
+            <a href="#!" class="text-light">Customer Help</a>
+          </li>
+          <li>
+            <a href="#!" class="text-light">Contact Us</a>
+          </li>
+          <li>
+            <a href="#!" class="text-light">Terms and Conditions</a>
+          </li>
+          <li>
+            <a href="#!" class="text-light">FAQS</a>
+          </li>
+        </ul>
+      </div>
+      <!--Grid column-->
+
+      <!--Grid column-->
+      <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+        <h5 class="text-uppercase">Follow</h5>
+
+        <ul class="list-unstyled mb-0">
+          <li>
+            <a href="#!" class="text-light">Facebook</a>
+          </li>
+          <li>
+            <a href="#!" class="text-light">Instagram</a>
+          </li>
+          <li>
+            <a href="#!" class="text-light">Instagram Kids</a>
+          </li>
+        
+        </ul>
+      </div>
+      <!--Grid column-->
+
+      <!--Grid column-->
+      <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+        <h5 class="text-uppercase mb-0">sign up</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            Sign up to our newsletter
+          </li>
+          <li>
+            
+            <br/>
+
+            <form action="">
+              <label for="email">Email *</label>
+              <input type="email" name="email" id="" class="w-100">
+              <br/>
+              <input type="submit" value="Submit" class="btn btn-warning m-2 btn-lg">
+            </form>
+          </li>
+         
+        </ul>
+      </div>
+      <!--Grid column-->
+    </div>
+    <div class="row">
+      <!--Grid column-->
+      <div class="col-lg-4 col-md-6 mb-4 mb-md-0 justify-content-start">
+        © Ndotohome 2020
+        <br>
+        <a href="https://devngecuportfolio.netlify.app/">Built With Love by Dev Ngecu</a>
+      </div>
+      <!--Grid column-->
+
+      <!--Grid column-->
+      <div class="col-lg-4 col-md-6 mb-4 mb-md-0 commpic">
+       <img src="https://themedemo.commercegurus.com/shoptimizer-demodata/wp-content/uploads/sites/53/2018/05/credit-cards.png" class="w-100" alt="">
+      </div>
+      <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+       </div>
+      <!--Grid column-->
+
+      <!--Grid column-->
+    
+      <!--Grid column-->
+    </div>
+    <!--Grid row-->
+  </div>
+  <!-- Grid container -->
+
+
+</footer>
 
  
     
@@ -294,20 +599,26 @@ console.log("cart:",cart)
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  <script>
-    window.onscroll = function() {myFunction()};
-    
-    var header = document.getElementById("myHeader");
-    var sticky = header.offsetTop;
-    console.log(header)
-    
-    function myFunction() {
-      if (window.pageYOffset > sticky) {
-        header.classList.add("sticky");
-      } else {
-        header.classList.remove("sticky");
-      }
+
+
+<script>
+  window.onscroll = function() {myFunction()};
+  
+  var navbar = document.getElementById("navbar");
+  var imagenav = document.getElementById("image-nav");
+
+  var sticky = navbar.offsetTop;
+  
+  function myFunction() {
+    if (window.pageYOffset >= sticky) {
+      navbar.classList.add("sticky")
+      imagenav.classList.add("appear");
+    } else {
+      navbar.classList.remove("sticky");
+      imagenav.classList.remove("appear");
     }
-    </script>
+  }
+  </script>
+
 </body>
 </html>

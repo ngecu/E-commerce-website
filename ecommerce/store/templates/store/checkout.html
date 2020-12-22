@@ -2,7 +2,7 @@
 {% extends 'store/main.html' %}
 {% load static %}
 {% block content %}
-
+<!-- 
 <div class="row">
 	<div class="col-lg-6">
 		<div class="box-element" id="form-wrapper">
@@ -43,7 +43,7 @@
 <div class="box-element hidden" id="payment-info">
     <small>Paypal Options</small>
     <div id="paypal-button-container"></div>
-    <!-- <button id="make-payment">Make Payment</button> -->
+     <button id="make-payment">Make Payment</button> 
 </div>
 
 	</div>
@@ -71,6 +71,156 @@
 
 
 	</div>
+</div> -->
+
+<div class="bg-white">
+<div class="container">
+<div class="row ">
+    <div class="col-lg-8 col-md-4 col-sm-6 col-xs-12 ">
+        <!-- <form>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputEmail4"> <b> First Name * </b></label>
+                <input type="text" class="form-control" id="inputEmail4" placeholder="Email">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputPassword4"> <b> Last Name * </b></label>
+                <input type="text" class="form-control" id="inputPassword4" placeholder="Password">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputAddress"> <b> Town * </b></label>
+              <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+            </div>
+            <div class="form-group">
+              <label for="inputAddress2"> <b> Phone * </b></label>
+              <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="inputCity"> <b> Email Address * </b> </label>
+                <input type="email" class="form-control" id="inputCity">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">
+                <b>  Ship to different address? </b>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+                <div class="d-flex flex-column">
+                  
+                  <label class="form-check-label" for="gridCheck">
+                  <b> Order notes(optional) </b>
+                  </label>
+                  <textarea name="" id="" cols="30" rows="10" placeholder="Notes about your order eg.specil notes for delivery"></textarea>
+                </div>
+              </div>
+
+
+          </form> -->
+
+
+          <form id="form">
+            <div id="user-info">
+                <div class="form-field">
+                    <input required class="form-control" type="text" name="name" placeholder="Name..">
+                </div>
+                <div class="form-field">
+                    <input required class="form-control" type="email" name="email" placeholder="Email..">
+                </div>
+            </div>
+            
+            <div id="shipping-info">
+                <hr>
+                <p>Shipping Information:</p>
+                <hr>
+                <div class="form-field">
+                    <input class="form-control" type="text" name="address" placeholder="Address..">
+                </div>
+                <div class="form-field">
+                    <input class="form-control" type="text" name="city" placeholder="City..">
+                </div>
+                <div class="form-field">
+                    <input class="form-control" type="text" name="state" placeholder="State..">
+                </div>
+                <div class="form-field">
+                    <input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
+                </div>
+            </div>
+
+                    <small>Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our privacy policy.</small>
+                    <!-- card .// -->
+                    <input id="form-button" class="btn btn-warning btn-block" type="submit" value="Place Order">
+                    <p class="text-center mb-3">
+                    <img src="https://themedemo.commercegurus.com/shoptimizer-demodata/wp-content/uploads/sites/53/2018/07/trust-symbols_b-1024x108.jpg" class="w-100" alt="">
+                    <!-- <img src="https://bootstrap-ecommerce.com/bootstrap-ecommerce-html/images/misc/payments.png" height="26"> -->
+                    </p>
+                       
+              
+            <hr>
+
+            
+        </form>
+        
+        <div class="box-element hidden" id="payment-info">
+            <small>Paypal Options</small>
+            <div id="paypal-button-container"></div>
+             <button id="make-payment">Make Payment</button> 
+        </div>
+</div>
+<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
+<b>Your Order</b>
+<div class="col-lg-12 col-md-4 col-sm-6 col-xs-12">
+<table class="table">
+           
+    <tbody>
+       
+    
+        
+
+        {% for item in items %}
+      <tr>
+        <th scope="row"><img  src="https://ndotohome.com/wp-content/uploads/2020/10/122160246_781243516060461_2217590841026982653_n-300x300.jpg" class="w-20" width="50px" alt=""></th>
+        <td> <a href=""> <small> {{item.product.name}} * {{item.quantity}} </small></a> </td>
+        <td>Ksh{{item.product.price|floatformat:2}}</td>
+      </tr>
+      {% endfor %}
+     
+    </tbody>
+  </table>
+</div>
+<div class="card bg-light">
+<div class="card-body">
+        <dl class="dlist-align d-flex">
+          <dd class="w-50">Subtotal</dd>
+          <dd class="text-right w-50">Ksh 72,145.00</dd>
+        </dl>
+        <hr/>
+        <dl class="dlist-align d-flex">
+          <dd class="w-50">Shipping</dd>
+          <dd class="text-right w-50">Ksh 250.00</dd>
+        </dl>
+        <hr/>
+        <dl class="dlist-align d-flex">
+            <dt class="w-50">Totoal</dt>
+            <dt class="text-right w-50">KSh72,395.00</dt>
+          </dl>
+       
+       
+        
+</div> <!-- card-body.// -->
+</div> 
+
+
+
+</div>
+</div>
+</div>
 </div>
 
 <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>

@@ -3,7 +3,7 @@
 {% load static %}
 {% block content %}
    
-<div class="container">
+<!-- <div class="container">
 
     <div class="row">
         <main class="col-md-9">
@@ -23,7 +23,7 @@
     <tr>
         <td>
             <figure class="itemside">
-                <div class="aside"><img src="{{item.product.image}}" class="img-sm img-thumbnail"></div>
+                <div class="aside"><img src="https://source.unsplash.com/random/800x600" class="img-sm img-thumbnail"></div>
                 <figcaption class="info">
                     <a href="#" class="title text-dark">{{item.product.name}}</a>
                     <p class="text-muted small">Size: XL, Color: blue, <br> Brand: Gucci</p>
@@ -44,11 +44,11 @@
             <div class="price-wrap"> 
                 <var class="price">${{item.get_total}}</var> 
                 <small class="text-muted"> ${{item.product.price|floatformat:2}} each </small> 
-            </div> <!-- price-wrap .// -->
+            </div>  price-wrap .
         </td>
         <td class="text-right"> 
         <a data-original-title="Save to Wishlist" title="" href="" class="btn btn-light" data-toggle="tooltip"> <i class="fa fa-heart"></i></a> 
-        <!-- <a href="" class="btn btn-light"> Remove</a> -->
+         <a href="" class="btn btn-light"> Remove</a> 
         </td>
     </tr>
     {% endfor %}
@@ -66,7 +66,7 @@
   <li class="page-item disabled">
     <a class="page-link" href="#" tabindex="-1">Previous</a>
   </li>
-    <!-- <li class="disabled"><span>&laquo;</span></li> -->
+     <li class="disabled"><span>&laquo;</span></li> 
   {% endif %}
   {% for i in items.paginator.page_range %}
     {% if items.number == i %}
@@ -81,7 +81,7 @@
   <li class="page-item disabled">
     <a class="page-link" href="#" tabindex="-1">Next</a>
   </li>
-    <!-- <li class="disabled"><span>&raquo;</span></li> -->
+ <li class="disabled"><span>&raquo;</span></li> 
   {% endif %}
 </ul>
 {% endif %}
@@ -91,13 +91,13 @@
         <a href="{% url 'checkout' %}" class="btn btn-primary float-md-right"> Make Purchase <i class="fa fa-chevron-right"></i> </a>
         <a href="{% url 'store' %}" class="btn btn-light"> <i class="fa fa-chevron-left"></i> Continue shopping </a>
     </div>	
-    </div> <!-- card.// -->
+    </div>
     
     <div class="alert alert-success mt-3">
         <p class="icontext"><i class="icon text-success fa fa-truck"></i> Free Delivery within 1-2 weeks</p>
     </div>
     
-        </main> <!-- col.// -->
+        </main>
         <aside class="col-md-3">
             <div class="card mb-3">
                 <div class="card-body">
@@ -112,8 +112,8 @@
                         </div>
                     </div>
                 </form>
-                </div> <!-- card-body.// -->
-            </div>  <!-- card .// -->
+                </div> 
+            </div> 
             <div class="card">
                 <div class="card-body">
                         <dl class="dlist-align d-flex">
@@ -124,20 +124,219 @@
                           <dt>Total Items:</dt>
                           <dd class="text-right">{{order.get_cart_items}}</dd>
                         </dl>
-                        <!-- <dl class="dlist-align">
+                         <dl class="dlist-align">
                           <dt>Total:</dt>
                           <dd class="text-right  h5"><strong>$1,650</strong></dd>
-                        </dl> -->
+                        </dl>
                         <hr>
                         <p class="text-center mb-3">
                             <img src="https://bootstrap-ecommerce.com/bootstrap-ecommerce-html/images/misc/payments.png" height="26">
                         </p>
                         
-                </div> <!-- card-body.// -->
-            </div>  <!-- card .// -->
-        </aside> <!-- col.// -->
+                </div> 
+            </div>  
+        </aside>
     </div>
     
-    </div>
+    </div> -->
 
+
+<div class="bg-white">
+    <div class="container">
+      <div class="stepwizard col-md-offset-3">
+          <div class="stepwizard-row setup-panel">
+            <div class="stepwizard-step first">
+              <a href="#step-1" type="button" class="btn btn-dark rounded-circle"> <b> 1</b></a>
+              <p> <b>Shopping Cart</b> </p>
+            </div>
+            <div class="stepwizard-step first">
+              <a href="#step-2" type="button" class="btn  btn-light rounded-circle" disabled="disabled">2</a>
+              <p> <b>Shipping $ Checkout</b> </p>
+            </div>
+            <div class="stepwizard-step first">
+              <a href="#step-3" type="button" class="btn btn-light rounded-circle" disabled="disabled">3</a>
+              <p> <b>Confirmation</b> </p>
+            </div>
+          </div>
+        </div>
+
+
+  <div class="row">
+      <div class="col-lg-8 col-md-4 col-sm-6 col-12">
+          <table class="table w-100">
+
+            
+             
+              <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>
+                        <figure class="itemside">
+                            <div class="aside"><img src="https://source.unsplash.com/random/800x600"  width="50px" class="img-sm img-thumbnail w-20"></div>
+                            <figcaption class="info">
+                                <a href="#" class="title text-dark">{{item.product.name}}</a>
+                                <p class="text-muted small">Size: XL, Color: blue, <br> Brand: Gucci</p>
+                            </figcaption>
+                        </figure>
+                    </td>
+                    <td> 
+                        <div style="flex:1">
+                            <p class="quantity">{{item.quantity}}</p>
+                            <div class="quantity">
+                                <img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}">
+                        
+                                <img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart " src="{% static  'images/arrow-down.png' %}">
+                            </div>
+                        </div>
+                    </td>
+                    <td> 
+                        <div class="price-wrap"> 
+                            <var class="price">${{item.get_total}}</var> 
+                            <small class="text-muted"> ${{item.product.price|floatformat:2}} each </small> 
+                        </div>  price-wrap .
+                    </td>
+                
+                </tr>
+                {% endfor %}
+                
+
+              
+                <nav aria-label="Page navigation example">    
+                  {% if items.has_other_pages %}
+                  <ul class="pagination justify-content-center">
+                    {% if items.has_previous %}
+                      <li><a class="page-link" href="?page={{ users.previous_page_number }}">Previous</a></li>
+                    {% else %}
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    </li>
+                       <li class="disabled"><span>&laquo;</span></li> 
+                    {% endif %}
+                    {% for i in items.paginator.page_range %}
+                      {% if items.number == i %}
+                        <li class="page-item active"><span class="page-link active">{{ i }} <span class="sr-only">(current)</span></span></li>
+                      {% else %}
+                        <li><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                      {% endif %}
+                    {% endfor %}
+                    {% if items.has_next %}
+                      <li class="page-item" ><a class="page-link" href="?page={{ users.next_page_number }}">Next</a></li>
+                    {% else %}
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" tabindex="-1">Next</a>
+                    </li>
+                   <li class="disabled"><span>&raquo;</span></li> 
+                    {% endif %}
+                  </ul>
+                  {% endif %}
+                  </nav>
+                  <tr>
+                    <td>
+                      <a href="{% url 'store' %}" class="btn btn-light"> <i class="fa fa-chevron-left"></i> Continue shopping </a>
+                    </td>
+                    <!-- <td>
+                      <a href="{% url 'checkout' %}" class="btn btn-primary float-md-right"> Make Purchase <i class="fa fa-chevron-right"></i> </a>             
+                    </td> -->
+                  
+                  </tr>
+                <!-- <tr>
+                  <td scope="row"> <input type="text" name="" placeholder="Coupon Code" id=""> </td>
+                  <td> <button class="btn btn-light">Apply Cuopon</button> </td>
+                  <td> <button class="btn btn-light">Update Cart</button></td>
+                </tr> -->
+              </tbody>
+            </table>
+</div>
+<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
+<div class="card bg-light">
+  <div class="card-body">
+          <dl class="dlist-align d-flex">
+            <dd class="w-50">Subtotal</dd>
+            <dd class="text-right w-50">${{order.get_cart_total}}</dd>
+          </dl>
+          <hr/>
+          <dl class="dlist-align d-flex">
+            <dd class="w-50">Shipping</dd>
+            <dd class="text-right w-50"></dd>
+          </dl>
+          <dl class="dlist-align d-flex">
+            <dd class="w-50"> <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="flexRadioDefault"
+                id="flexRadioDefault2"
+                checked
+              />
+              <label class="form-check-label" for="flexRadioDefault2">  <b> Flat Rate </b> </label>
+            </div></dd>
+            <dd class="text-right w-50">Ksh 250.00</dd>
+          </dl>
+          <dl class="dlist-align d-flex">
+            <dd class="w-50">Shipping to <b> Nairobi County </b></dd>
+            <dd class="text-right w-50">Ksh 250.00</dd>
+          </dl>
+          <dl class="dlist-align d-flex">
+            <dd class="w-50">
+              <a  data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+              Change Address
+            </a>
+            
+          </dd>
+           
+          </dl>
+          <dl class="collapse" id="collapseExample">
+          
+            <form>
+              <div class="form-group">
+                <select class="form-control" id="exampleFormControlSelect1">
+                  <option>Default Sorting</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+              <div class="form-group">
+              
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="City">
+              </div>
+              <div class="form-group">
+                
+                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="PostCode">
+              </div>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+              </div>
+              <button type="submit" class=" btn btn-outline-dark">Update</button>
+            </form>                  
+          </dl>
+
+
+
+          
+          <hr/>
+          <dl class="dlist-align d-flex">
+              <dt class="w-50">Total</dt>
+              <dt class="text-right w-50"> ${{order.get_cart_total|floatformat:2}}</dt>
+            </dl>
+          <!-- <dl class="dlist-align">
+            <dt>Total:</dt>
+            <dd class="text-right  h5"><strong>$1,650</strong></dd>
+          </dl> -->
+          <hr>
+         
+          
+  </div> <!-- card-body.// -->
+</div>  <!-- card .// -->
+<a href="{% url 'checkout' %}" class="btn-danger btn-lg btn w-100 btn-block text-light">Proceed To CheckOut</a>
+<p class="text-center mb-3">
+  <img src="https://themedemo.commercegurus.com/shoptimizer-demodata/wp-content/uploads/sites/53/2018/07/trust-symbols_b-1024x108.jpg" class="w-100" alt="">
+  <!-- <img src="https://bootstrap-ecommerce.com/bootstrap-ecommerce-html/images/misc/payments.png" height="26"> -->
+</p>
+</div>
+  </div>
+  </div>
+</div>
 {% endblock content %}

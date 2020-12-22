@@ -52,6 +52,7 @@ class Product(models.Model):
     name = models.CharField(max_length=200,null=True)
     sub_category = models.ForeignKey(SubCategory,blank=True,null=True,on_delete=models.SET_NULL)
     price = models.FloatField()
+    percentage_discount = models.FloatField(default=0.00,blank=True,null=True)
     description = models.TextField(max_length=1000,null=True,blank=True)
     digital = models.BooleanField(default=False,null=True,blank=False)
     image =  models.URLField(null=True,blank=True)
@@ -70,6 +71,16 @@ class Product(models.Model):
         except:
             url = ''
         return url
+
+    @property
+    def discount_calculation(self):
+        if self.percentage_discount != 0.0:
+            discount = (self.percentage_discount/100) * self.price
+            new_price = self.price - discount
+            print ("new price:",new_price)
+            return  new_price
+        else:
+            return " "
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer,null=True,on_delete=models.SET_NULL,blank=True)

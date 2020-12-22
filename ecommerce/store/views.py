@@ -23,20 +23,20 @@ from .filters import ProductFilter
 from django.contrib import messages
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-# def search_store(request):
-#     data = cartData(request)
-#     cartItems = data['cartItems']
-#     products = Product.objects.all()
-#     myFilter = ProductFilter(request.GET,queryset=products)
-#     products = myFilter.qs
-#     try:
-#           user = request.user
-#           context = {"customer":customer}
-#     except:
-#           pass
-
-#     context = {'products':products,"customer":user}
-#     return render(request, 'store/search.html', context)
+def search_store(request,products):
+    data = cartData(request)
+    cartItems = data['cartItems']
+    products = Product.objects.all()
+    myFilter = ProductFilter(request.GET,queryset=products)
+    products = myFilter.qs
+    try:
+          user = request.user
+          context = {"customer":customer}
+    except:
+          pass
+     
+    context = {'products':products,"customer":user}
+    return render(request, 'store/search.html', context)
     
 
 # Create your views here.
@@ -220,6 +220,8 @@ def account(request,pk_test):
 def category(request,pk_test):
      category = Category.objects.get(name=pk_test)
      sub_categories = category.subcategory_set.all()
+     categories = Category.objects.all()
+
      print("sub_categories:",sub_categories)
      data = cartData(request)
      cartItems = data['cartItems']
@@ -232,7 +234,7 @@ def category(request,pk_test):
      except:
           pass
 
-     context = {'sub_categories':sub_categories,'customer':customer,'items':items,'order':order,"cartItems":cartItems}
+     context = {'sub_categories':sub_categories,'customer':customer,'items':items,'order':order,"cartItems":cartItems,'category':category,'categories':categories}
      return render(request,'store/category.html',context)
 
 
