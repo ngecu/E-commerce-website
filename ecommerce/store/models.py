@@ -64,13 +64,7 @@ class Product(models.Model):
     def __str__(self):
        return str(self.name)
        
-    @property
-    def imageURL(self):
-        try:
-            url = self.image.url
-        except:
-            url = ''
-        return url
+
 
     @property
     def discount_calculation(self):

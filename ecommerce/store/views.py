@@ -47,6 +47,7 @@ def store(request):
      cartItems = data['cartItems']
      categories = Category.objects.all()
      products = Product.objects.all()
+     sub_categories = SubCategory.objects.all()
      try:
           user = request.user
           
@@ -62,7 +63,7 @@ def store(request):
      # trip = get_object_or_404(Product)
      # trip_related = trip.tags.similar_objects()
 
-     context = {'categories':categories,'products':products,"cartItems":cartItems,'customer':user,'myFilter':myFilter}
+     context = {'categories':categories,'products':products,"cartItems":cartItems,'customer':user,'myFilter':myFilter,'sub_categories':sub_categories}
      return render(request, 'store/store.html', context)
 
 @login_required(login_url='login_page')
@@ -137,11 +138,17 @@ def processOrder(request):
      print("data: ",request.body)
      transaction_id = datetime.datetime.now().timestamp()
      data = json.loads(request.body)
-     total = float(data['form']['total'])
 
      if request.user.is_authenticated:
           customer = request.user.customer
-          order,created = Order.objects.get_or_create(customer=customer,complete=True,transaction_id = transaction_id)
+          order,created = Order.objects.get_or_create(customer=customer,complete=False)
+          total = float(data['form']['total'])
+          order.transaction_id = transaction_id
+
+          if total == float(order.get_cart_total):
+               order.complete = True
+          order.save()
+          
           if order.shipping == True:
                ShippingAddress.objects.create(
                     customer = customer,
@@ -154,8 +161,10 @@ def processOrder(request):
                )
                print("shipping true")
 
+     else:
+          print("user is not logged in")
 
-          return JsonResponse('Payment submitted...',safe=False)
+     return JsonResponse('Payment submitted...',safe=False)
 
 
 

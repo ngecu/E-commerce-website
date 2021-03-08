@@ -1,13 +1,14 @@
 
-<!DOCTYPE html>
 {% load static %}
+
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Online Store(Dev Ngecu)</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
 
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
 	<link rel="stylesheet" type="text/css" href="{% static 'css/store.css' %}">
 
   <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
@@ -20,6 +21,33 @@
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="{% static "plugins/fontawesome-free/css/all.min.css" %}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Tempusdominus Bbootstrap 4 -->
+  <link rel="stylesheet" href="{% static "plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" %}">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{% static "plugins/icheck-bootstrap/icheck-bootstrap.min.css" %}">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="{% static "plugins/jqvmap/jqvmap.min.css" %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static "dist/css/adminlte.min.css" %}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static "plugins/overlayScrollbars/css/OverlayScrollbars.min.css" %}">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="{% static "plugins/daterangepicker/daterangepicker.css" %}">
+  <!-- summernote -->
+  <link rel="stylesheet" href="{% static "plugins/summernote/summernote-bs4.css" %}">
+
+  <link rel="stylesheet" href="{% static "css/main.css" %}">
+
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
 
   <script>
     var user = '{{request.user}}';
@@ -140,6 +168,7 @@ console.log("cart:",cart)
     </div>
 </div>
 </nav> -->
+
 <div class="container">
 <nav class="navbar  navbar-expand-lg navbar-light bg-light text-dark" id="myHeader">
   <a class="navbar-brand" href="{% url 'store' %}">
@@ -161,10 +190,7 @@ console.log("cart:",cart)
       </li>
  
     </ul>
-    <form class="form-inline my-2 my-lg-0" action="get">
-      {{myFilter.form}}
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+
 
     <div class="dropdown">
       {% if request.user.is_authenticated %}
@@ -212,126 +238,18 @@ console.log("cart:",cart)
                 </a>
                
               </li>
-
+              {% for category in categories|slice:"0:5" %}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Living Room
+                    <a class="nav-link  text-light" href="{% url 'category' category.name %}">
+                    {{category.name}}
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
+                  
                   </li>
-
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Bathrooms
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </li>
-
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Bedroom
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </li>
-
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Kitchen
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </li>
-
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Ndoto Kids
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </li>
-            </ul>
+              {% endfor %}
         </div>
     </div>
 </nav>
- <!-- <div class="container">
-<nav class="navbar  navbar-expand-lg navbar-light bg-light text-dark" id="myHeader">
-    <a class="navbar-brand" href="{% url 'store' %}">
-      <img src="{% static  'images/logo.png' %}" alt="" style="width: 100px;">
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
 
-
- 
-
-
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="{% url 'store' %}">Store <span class="sr-only">(current)</span></a>
-        </li>
-   
-      </ul>
-      <form class="form-inline my-2 my-lg-0" action="get">
-        {{myFilter.form}}
-         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> 
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
-
-      <div class="dropdown">
-        {% if request.user.is_authenticated %}
-        <button class="btn dropdown-toggle text-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Hi,{{request.user}}
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="{% url 'account' customer.id %}"> Account</a>
-
-          <hr>
-          <a class="dropdown-item btn btn-primary" href="{% url 'logout' %}">Logout</a>
-        </div>       
-         {% else %}
-        <a href="{% url 'login_page' %}"class="btn btn-warning">Login</a>
-    {% endif %}  
-
-        
-      </div>
-
-      <div class="form-inline my-2 my-lg-0">
-        
-           <a href="{% url 'cart' %}">
-              <img  id="cart-icon" src="{% static 'images/cart.png' %}">
-          </a>
-          <p id="cart-total">{{cartItems}}</p>
-  
-      </div>
-    </div>
-  </nav>
-</div>    -->
 <div class="main">
   {% block content %}
 
@@ -619,6 +537,43 @@ console.log("cart:",cart)
     }
   }
   </script>
+
+
+<script src="{% static "plugins/jquery/jquery.min.js" %}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{% static "plugins/jquery-ui/jquery-ui.min.js" %}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="{% static "plugins/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+<!-- ChartJS -->
+<script src="{% static "plugins/chart.js/Chart.min.js" %}"></script>
+<!-- Sparkline -->
+<script src="{% static "plugins/sparklines/sparkline.js" %}"></script>
+<!-- JQVMap -->
+<script src="{% static "plugins/jqvmap/jquery.vmap.min.js" %}"></script>
+<script src="{% static "plugins/jqvmap/maps/jquery.vmap.usa.js" %}"></script>
+<!-- jQuery Knob Chart -->
+<script src="{% static "plugins/jquery-knob/jquery.knob.min.js" %}"></script>
+<!-- daterangepicker -->
+<script src="{% static "plugins/moment/moment.min.js" %}"></script>
+<script src="{% static "plugins/daterangepicker/daterangepicker.js" %}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{% static "plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js" %}"></script>
+<!-- Summernote -->
+<script src="{% static "plugins/summernote/summernote-bs4.min.js" %}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static "plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js" %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static "dist/js/adminlte.js" %}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{% static "dist/js/pages/dashboard.js" %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static "dist/js/demo.js" %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="{% static "js/cart.js" %}"></script>
 
 </body>
 </html>

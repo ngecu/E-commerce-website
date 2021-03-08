@@ -2,6 +2,12 @@
 {% extends 'store/main.html' %}
 {% load static %}
 {% block content %}
+<style>
+#paypal-button-container{
+    z-index:9
+}
+</style>
+
 <!-- 
 <div class="row">
 	<div class="col-lg-6">
@@ -173,6 +179,7 @@
              <button id="make-payment">Make Payment</button> 
         </div>
 </div>
+
 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
 <b>Your Order</b>
 <div class="col-lg-12 col-md-4 col-sm-6 col-xs-12">
@@ -219,6 +226,8 @@
 
 
 </div>
+
+
 </div>
 </div>
 </div>
